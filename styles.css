@@ -25,27 +25,25 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 20px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  margin: 0;
   color: var(--ink);
   font-family: "Noto Sans Oriya", system-ui, sans-serif;
-  background:
-    /* Opened card reference background with low opacity
-    radial-gradient(ellipse at 50% 100%, rgba(250, 186, 76, 0.35), transparent 34rem),
-    radial-gradient(circle at 12% 16%, rgba(255, 211, 116, 0.32), transparent 17rem),
-    radial-gradient(circle at 88% 13%, rgba(244, 101, 72, 0.28), transparent 18rem),
-    radial-gradient(circle at 50% 50%, rgba(233, 30, 99, 0.15) 0 10rem, transparent 10rem),
-    radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.12) 0 8rem, transparent 8rem),
-    radial-gradient(circle at 80% 80%, rgba(76, 175, 80, 0.12) 0 8rem, transparent 8rem),
-    /* Subtle diagonal Indian pattern */
-    repeating-linear-gradient(45deg, rgba(255, 211, 116, 0.05) 0px, transparent 0px 25px, rgba(217, 61, 89, 0.03) 25px, transparent 25px 50px),
-    linear-gradient(145deg, rgba(42, 6, 12, 0.9), rgba(105, 15, 18, 0.85) 45%, rgba(43, 8, 8, 0.9));
+  background: linear-gradient(135deg, #2a060c 0%, #5a1018 50%, #2a060c 100%);
   min-height: 100vh;
+  width: 100%;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  display: block;
+  margin: 0 auto;
 }
+
+/* Ensure main container stays within viewport */
+
 
 body::before {
   content: "";
@@ -60,6 +58,9 @@ body::before {
     url("assets/opened-card-reference.png") center / cover;
   backdrop-filter: blur(2px) saturate(1.12);
   opacity: 0.1; /* Low opacity for the background image */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body::after {
@@ -72,7 +73,28 @@ body::after {
     radial-gradient(circle at 50% 100%, transparent 0 7rem, rgba(245, 174, 50, 0.28) 7.15rem 7.35rem, transparent 7.5rem),
     radial-gradient(circle at 50% 100%, transparent 0 10.6rem, rgba(255, 232, 168, 0.18) 10.75rem 10.95rem, transparent 11.1rem),
     radial-gradient(circle at 50% 100%, transparent 0 14rem, rgba(214, 55, 72, 0.16) 14.2rem 14.35rem, transparent 14.5rem),
-    linear-gradient(180deg, rgba(255, 197, 78, 0.04), transparent 38%, rgba(75, 5, 7, 0.16));
+    linear-gradient(180deg, rgba(255, 197, 78, 0.04), transparent 38%, rgba(75, 5, 7, 0.16)),
+    url("assets/opening-mobile-smoke.png") center bottom / contain no-repeat;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Decorative smoke element for cards */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/details-desktop-smoke.png") center / cover;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover::before {
+  opacity: 0.25;
 }
 
 button,
@@ -83,37 +105,36 @@ a {
 main {
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 700px;
+  background: var(--paper);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(249, 201, 126, 0.2);
+  padding: 0.5rem;
+  border: 4px solid var(--gold);
+  overflow: visible;
+  box-sizing: border-box;
+  flex-shrink: 0;
+      margin: 0.5rem auto;
 }
 
-main::before,
+/* Decorative borders for the invitation card */
+main::before {
+  content: "";
+  position: absolute;
+  inset: 0.3rem;
+  border: 2px solid rgba(198, 131, 41, 0.4);
+  border-radius: 1rem;
+  pointer-events: none;
+}
+
 main::after {
   content: "";
-  position: fixed;
-  top: 5.8rem;
-  bottom: 0;
-  z-index: 1;
-  width: min(13vw, 5.5rem);
+  position: absolute;
+  inset: 0.6rem;
+  border: 1px solid rgba(198, 131, 41, 0.2);
+  border-radius: 0.8rem;
   pointer-events: none;
-  opacity: 0.72;
-  background:
-    radial-gradient(circle at 50% 4%, #ffd05f 0 0.34rem, transparent 0.38rem),
-    radial-gradient(circle at 50% 10%, #f28c22 0 0.32rem, transparent 0.36rem),
-    radial-gradient(circle at 50% 16%, #f6bb36 0 0.34rem, transparent 0.38rem),
-    radial-gradient(circle at 50% 22%, #d9474e 0 0.28rem, transparent 0.32rem),
-    radial-gradient(circle at 50% 28%, #ffd05f 0 0.34rem, transparent 0.38rem),
-    radial-gradient(circle at 50% 34%, #f28c22 0 0.32rem, transparent 0.36rem),
-    linear-gradient(180deg, rgba(242, 196, 105, 0.58), transparent 80%);
-  background-size: 100% 12rem, 100% 12rem, 100% 12rem, 100% 12rem, 100% 12rem, 100% 12rem, 2px 100%;
-  background-repeat: repeat-y;
-  background-position: center top;
-}
-
-main::before {
-  left: 0.6rem;
-}
-
-main::after {
-  right: 0.6rem;
 }
 
 .ambient,
@@ -122,10 +143,26 @@ main::after {
   position: fixed;
   inset: 0;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .ambient {
   z-index: 0;
+  position: fixed;
+    inset: 0;
+    display: block; /* important */
+}
+
+/* Keep petals inside the invitation card */
+.petal-layer {
+  z-index: 3;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .ambient::before {
@@ -172,75 +209,77 @@ main::after {
   z-index: 4;
 }
 
-/* Decorative corners */
+/* Decorative corners inside the invitation card */
 .decorative-corner {
-  position: fixed;
-  width: 120px;
-  height: 120px;
+  position: absolute;
+  width: 60px;
+  height: 60px;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.8;
+  opacity: 0.7;
+  box-sizing: border-box;
 }
 
 .corner-top-left {
-  top: 0;
-  left: 0;
+  top: 1rem;
+  left: 1rem;
   background:
-    radial-gradient(circle at 30% 30%, var(--marigold) 0 8px, transparent 8px),
-    radial-gradient(circle at 60% 20%, var(--rose) 0 6px, transparent 6px),
-    radial-gradient(circle at 20% 60%, var(--gold) 0 7px, transparent 7px);
+    radial-gradient(circle at 30% 30%, var(--marigold) 0 6px, transparent 6px),
+    radial-gradient(circle at 60% 20%, var(--rose) 0 5px, transparent 5px),
+    radial-gradient(circle at 20% 60%, var(--gold) 0 6px, transparent 6px);
 }
 
 .corner-top-right {
-  top: 0;
-  right: 0;
+  top: 1rem;
+  right: 1rem;
   background:
-    radial-gradient(circle at 70% 30%, var(--marigold) 0 8px, transparent 8px),
-    radial-gradient(circle at 40% 20%, var(--rose) 0 6px, transparent 6px),
-    radial-gradient(circle at 80% 60%, var(--gold) 0 7px, transparent 7px);
+    radial-gradient(circle at 70% 30%, var(--marigold) 0 6px, transparent 6px),
+    radial-gradient(circle at 40% 20%, var(--rose) 0 5px, transparent 5px),
+    radial-gradient(circle at 80% 60%, var(--gold) 0 6px, transparent 6px);
   transform: scaleX(-1);
 }
 
 .corner-bottom-left {
-  bottom: 0;
-  left: 0;
+  bottom: 1rem;
+  left: 1rem;
   background:
-    radial-gradient(circle at 30% 70%, var(--marigold) 0 8px, transparent 8px),
-    radial-gradient(circle at 60% 80%, var(--rose) 0 6px, transparent 6px),
-    radial-gradient(circle at 20% 40%, var(--gold) 0 7px, transparent 7px);
+    radial-gradient(circle at 30% 70%, var(--marigold) 0 6px, transparent 6px),
+    radial-gradient(circle at 60% 80%, var(--rose) 0 5px, transparent 5px),
+    radial-gradient(circle at 20% 40%, var(--gold) 0 6px, transparent 6px);
   transform: scaleY(-1);
 }
 
 .corner-bottom-right {
-  bottom: 0;
-  right: 0;
+  bottom: 1rem;
+  right: 1rem;
   background:
-    radial-gradient(circle at 70% 70%, var(--marigold) 0 8px, transparent 8px),
-    radial-gradient(circle at 40% 80%, var(--rose) 0 6px, transparent 6px),
-    radial-gradient(circle at 80% 40%, var(--gold) 0 7px, transparent 7px);
+    radial-gradient(circle at 70% 70%, var(--marigold) 0 6px, transparent 6px),
+    radial-gradient(circle at 40% 80%, var(--rose) 0 5px, transparent 5px),
+    radial-gradient(circle at 80% 40%, var(--gold) 0 6px, transparent 6px);
   transform: scale(-1, -1);
 }
 
 /* Rangoli-inspired central decor */
 .rangoli-decoration {
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
+  width: 180px;
+  height: 180px;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.35;
+  opacity: 0.25;
   background:
-    radial-gradient(circle, var(--marigold) 0 4px, transparent 4px 8px),
-    radial-gradient(circle, var(--pink) 0 3px, transparent 3px 7px),
-    radial-gradient(circle, var(--gold) 0 5px, transparent 5px 9px),
+    radial-gradient(circle, var(--marigold) 0 3px, transparent 3px 6px),
+    radial-gradient(circle, var(--pink) 0 2px, transparent 2px 5px),
+    radial-gradient(circle, var(--gold) 0 4px, transparent 4px 7px),
     conic-gradient(from 0deg, var(--rose) 0deg 30deg, transparent 30deg 60deg, var(--gold) 60deg 90deg, transparent 90deg 120deg, var(--marigold) 120deg 150deg, transparent 150deg 180deg, var(--rose) 180deg 210deg, transparent 210deg 240deg, var(--gold) 240deg 270deg, transparent 270deg 300deg, var(--marigold) 300deg 330deg, transparent 330deg 360deg);
-  background-size: 20px 20px, 20px 20px, 20px 20px, 100% 100%;
+  background-size: 15px 15px, 15px 15px, 15px 15px, 100% 100%;
   background-position: center;
   border-radius: 50%;
   filter: blur(0.5px);
+  box-sizing: border-box;
 }
 
 /* Card floral top decor */
@@ -376,26 +415,29 @@ main::after {
 }
 
 .hero {
-  min-height: 100vh;
+  min-height: auto;
   display: grid;
   place-items: center;
   align-content: center;
   gap: 1rem;
-  padding: 1rem 0.85rem 3.8rem;
+  padding: 1rem 0 3rem;
   perspective: 1400px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero::before {
   content: "";
   position: absolute;
-  inset: 6rem 0 auto;
-  height: min(62vh, 33rem);
+  inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
     radial-gradient(ellipse at 50% 46%, rgba(255, 213, 126, 0.22), transparent 20rem),
     linear-gradient(90deg, transparent 0 11%, rgba(255, 211, 116, 0.28) 11.2% 11.6%, transparent 11.8% 88.2%, rgba(255, 211, 116, 0.28) 88.4% 88.8%, transparent 89%),
-    radial-gradient(ellipse at 50% 100%, rgba(68, 10, 8, 0.34), transparent 55%);
+    radial-gradient(ellipse at 50% 100%, rgba(68, 10, 8, 0.34), transparent 55%),
+    url("assets/opening-after-click-smoke.png") center bottom / contain no-repeat;
+  opacity: 0.6;
 }
 
 .hero::after {
@@ -461,13 +503,36 @@ body.invite-preview .step-pill {
       rgba(199, 132, 36, 0.04) 10px
     ),
     var(--paper);
-  box-shadow: var(--shadow), inset 0 0 0 3px rgba(198, 131, 41, 0.65), 0 0 50px rgba(249, 201, 126, 0.3), 0 0 80px rgba(217, 61, 89, 0.12);
+  box-shadow: var(--shadow), inset 0 0 0 3px rgba(198, 131, 41, 0.65), 0 0 60px rgba(249, 201, 126, 0.4), 0 0 90px rgba(217, 61, 89, 0.15);
   cursor: pointer;
   transform-style: preserve-3d;
   animation: invitationEntrance 1s cubic-bezier(0.18, 0.82, 0.22, 1) both, invitationBreath 3.8s ease-in-out 1s infinite;
   transition: transform 0.45s ease, box-shadow 0.45s ease;
   overflow: visible;
   isolation: isolate;
+}
+
+/* Envelope decorative border glow */
+.envelope-shell::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, var(--gold), var(--rose), var(--marigold), var(--gold));
+  background-size: 300% 300%;
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.5;
+  animation: borderGlow 4s ease infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 
@@ -942,52 +1007,15 @@ h3 {
 .cards-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.35rem;
-  width: min(1180px, 100%);
-  margin: 0 auto;
-  padding: 2.6rem 0.85rem 7rem;
+  gap: 1.25rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0 7rem;
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.8s ease, transform 0.8s ease;
   position: relative;
-}
-
-.cards-grid::before {
-  content: "";
-  position: absolute;
-  inset: 0 -3vw;
-  z-index: -1;
-  background:
-    radial-gradient(ellipse at 12% 4%, rgba(255, 207, 100, 0.18), transparent 16rem),
-    radial-gradient(ellipse at 88% 6%, rgba(255, 207, 100, 0.18), transparent 16rem),
-    radial-gradient(ellipse at 50% 100%, rgba(245, 174, 50, 0.22), transparent 26rem),
-    linear-gradient(180deg, rgba(58, 5, 8, 0.12), rgba(102, 12, 14, 0.48) 25%, rgba(48, 4, 8, 0.38));
-  border-top: 1px solid rgba(247, 199, 124, 0.25);
-  box-shadow: inset 0 35px 80px rgba(31, 4, 5, 0.2);
-}
-
-.cards-grid::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0.4rem;
-  z-index: -1;
-  width: min(94vw, 62rem);
-  height: 5.2rem;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 7% 42%, var(--marigold) 0 0.36rem, transparent 0.4rem),
-    radial-gradient(circle at 13% 62%, #f28c22 0 0.32rem, transparent 0.36rem),
-    radial-gradient(circle at 21% 42%, #ffd66f 0 0.36rem, transparent 0.4rem),
-    radial-gradient(circle at 31% 62%, var(--rose) 0 0.3rem, transparent 0.34rem),
-    radial-gradient(circle at 42% 42%, var(--marigold) 0 0.36rem, transparent 0.4rem),
-    radial-gradient(circle at 56% 62%, #f28c22 0 0.32rem, transparent 0.36rem),
-    radial-gradient(circle at 68% 42%, #ffd66f 0 0.36rem, transparent 0.4rem),
-    radial-gradient(circle at 81% 62%, var(--rose) 0 0.3rem, transparent 0.34rem),
-    radial-gradient(circle at 93% 42%, var(--marigold) 0 0.36rem, transparent 0.4rem),
-    linear-gradient(90deg, transparent, rgba(255, 214, 112, 0.7), transparent) center 2.5rem / 100% 2px no-repeat;
-  filter: drop-shadow(0 8px 12px rgba(42, 5, 5, 0.26));
-  transform: translateX(-50%);
+  z-index: 2;
 }
 
 body.invite-locked .cards-grid {
@@ -1000,8 +1028,8 @@ body.invite-locked .cards-grid {
 
 .card {
   position: relative;
-  min-height: 29rem;
-  padding: 1.8rem 1.25rem 3.25rem;
+  min-height: auto;
+  padding: 1.5rem 1rem 2.5rem;
   border: 3px solid rgba(188, 117, 31, 0.75);
   border-radius: 0.8rem;
   background:
@@ -1025,6 +1053,8 @@ body.invite-locked .cards-grid {
   opacity: 0;
   transform: translateY(3rem) rotateX(8deg);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 
@@ -1035,13 +1065,13 @@ body.invite-locked .cards-grid {
 
 .card.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) rotateX(0);
 }
 
 .card:hover {
-  box-shadow: 0 35px 70px rgba(35, 5, 5, 0.5), inset 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 60px rgba(249, 201, 126, 0.35), 0 0 85px rgba(217, 61, 89, 0.2);
-  transform: translateY(-0.8rem);
-  border-color: rgba(188, 117, 31, 1);
+  box-shadow: 0 40px 80px rgba(35, 5, 5, 0.55), inset 0 0 0 3px rgba(255, 255, 255, 0.95), 0 0 70px rgba(249, 201, 126, 0.45), 0 0 100px rgba(217, 61, 89, 0.3);
+  transform: translateY(-1rem) scale(1.02);
+  border-color: var(--gold);
 }
 
 .card::before,
@@ -1157,6 +1187,32 @@ body.invite-locked .cards-grid {
   white-space: nowrap;
   transform: translateX(-50%);
 }
+
+/* Floral corner decorations */
+.venue-card .corner-floral {
+  position: absolute;
+  width: 3.8rem;
+  height: 3.8rem;
+  opacity: 0.85;
+  pointer-events: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* Top-left floral */
+.venue-card .corner-floral.tl {
+  top: 0.8rem;
+  left: 0.8rem;
+  background-image: url("assets/floral-corner-top-left.png");
+}
+
+/* Bottom-right floral */
+.venue-card .corner-floral.br {
+  bottom: 0.8rem;
+  right: 0.8rem;
+  background-image: url("assets/floral-corner-bottom-right.png");
+}
+
 
 .venue-card::before,
 .contact-card::before,
@@ -1385,15 +1441,31 @@ body.invite-locked .cards-grid {
   font-size: 1.7rem;
 }
 
+.event-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .event strong {
   display: block;
   color: var(--maroon);
 }
 
-.event span {
+.event-date {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+}
+
+.event span:not(.event-date) {
   display: block;
   margin-top: 0.15rem;
   font-size: 0.95rem;
+  opacity: 0.75;
 }
 
 .venue-art {
@@ -1408,6 +1480,66 @@ body.invite-locked .cards-grid {
     linear-gradient(120deg, transparent 35%, rgba(247, 187, 67, 0.55) 36% 64%, transparent 65%),
     #fff3d6;
 }
+
+.venue-details {
+  margin: 1.2rem 0;
+}
+
+.venue-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 246, 220, 0.7);
+  border: 1px solid rgba(201, 132, 36, 0.25);
+}
+
+.venue-icon {
+  font-size: 1.3rem;
+}
+
+.venue-link {
+  color: var(--maroon);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.venue-link:hover {
+  color: var(--rose);
+  text-decoration: underline;
+}
+
+.venue-actions {
+  margin: 1rem 0;
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.85rem;
+  padding: 0.7rem 1.35rem;
+  color: var(--maroon);
+  text-decoration: none;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff8e9 0%, #f5ddb5 100%);
+  box-shadow: 0 5px 12px rgba(81, 14, 11, 0.15);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  font-weight: 600;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(81, 14, 11, 0.25);
+  border-color: var(--gold-light);
+}
+
 
 .pin {
   display: grid;
@@ -1548,10 +1680,11 @@ body.invite-locked .cards-grid {
   bottom: 1rem;
   z-index: 8;
   display: grid;
-  grid-template-columns: 2.6rem minmax(7rem, 1fr) 4rem auto;
+  grid-template-columns: 2.6rem minmax(7rem, 1fr) auto;
   align-items: center;
   gap: 0.7rem;
   width: min(92vw, 650px);
+  max-width: 700px;
   min-height: 3.7rem;
   padding: 0.5rem 0.8rem;
   color: #fff5cf;
@@ -1561,6 +1694,9 @@ body.invite-locked .cards-grid {
   box-shadow: 0 20px 38px rgba(26, 7, 6, 0.45), 0 0 30px rgba(249, 201, 126, 0.3);
   transform: translateX(-50%);
   transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+  box-sizing: border-box;
+      margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -1580,6 +1716,8 @@ body.details-mode .music-player {
   opacity: 1;
   pointer-events: auto;
   transform: none;
+      margin-left: auto;
+    margin-right: auto;
 }
 
 .music-player button {
@@ -1710,7 +1848,7 @@ body.details-mode .music-player {
   .cards-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.1rem;
-    padding-inline: 1.2rem;
+    padding: 0.5rem 0 7rem;
   }
 
   .blessing-card {
@@ -1878,14 +2016,14 @@ body.details-mode .music-player {
   }
 
   .decorative-corner {
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
     opacity: 0.6;
   }
 
   .rangoli-decoration {
-    width: 280px;
-    height: 280px;
+    width: 160px;
+    height: 160px;
     opacity: 0.25;
   }
 }
@@ -1925,5 +2063,81 @@ body.details-mode .music-player {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: var(--paper);
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 3px solid var(--gold);
+  position: relative;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--maroon);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+}
+
+.modal-content h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 520px) {
+  .modal-content {
+    padding: 1.5rem;
   }
 }

@@ -1,25 +1,54 @@
 const WEDDING_CONFIG = {
-  groomName: "ଶ୍ରୀ ଓଁ ପ୍ରକାଶ ବେହେରା",
-  brideName: "ଶ୍ରୀମତୀ ସୁହାସିନୀ ବେହେରା",
-  coupleShort: "ସାଦର ନିମନ୍ତ୍ରଣୀ",
-  coupleFull: "ଓଁ ପ୍ରକାଶ ଓ ସୁହାସିନୀ",
-  weddingDate: "2026-12-15T19:30:00+05:30",
-  weddingDateText: "ତାରିଖ : ୧୫ ଡିସେମ୍ବର ୨୦୨୬",
+  groomName: "ଓମ ପ୍ରକାଶ ଜେନା (ରିଙ୍କୁ)",
+  brideName: "ସମମତାରାଣୀ (ମାମା)",
+  coupleShort: "ସାଦର ନିମନ୍ତ୍ରଣ",
+  coupleFull: "ରିଙ୍କୁ ଓ ମାମା",
+  weddingDate: "2026-07-16T19:30:00+05:30",
+  weddingDateText: "ତାରିଖ : ୧୬ ଜୁଲାଇ ୨୦୨୬",
   venueName: "ଶୁଭ ମଣ୍ଡପ",
-  venueAddress: "ଗ୍ରାମ/ସହର, ଜିଲ୍ଲା, ଓଡିଶା",
-  mapQuery: "Shree Jagannath Temple Puri Odisha",
-  phones: ["9438059638", "8114991718"],
+  venueAddress: "ଶ୍ରୀକୃଷ୍ଣ ମଣ୍ଡପ, ଗଛେନପଦୀ ଛକ, ବଉଳା ରୋଡ",
+  venueCity: "କେନ୍ଦୁଝର",
+  venueState: "ଓଡ଼ିଶା",
+  venuePin: "758022",
+  venuePhone: "+91 94380859638",
+  venueLandmark: "ଶ୍ରୀକୃଷ୍ଣ ମଣ୍ଡପ, ଗଛେନପଦୀ ଛକ",
+  mapQuery: "56JJ+62X, Chhenapadi, Odisha 758083",
+  phones: ["9438059638", "9090000370"],
   whatsappNumber: "919438059638",
   whatsappMessage: "ଶୁଭ ବିବାହ ନିମନ୍ତ୍ରଣ ପାଇଁ ଧନ୍ୟବାଦ।",
   musicSrc: "assets/wedding-music.mp3",
   weddingHashtag: "#ShubhaVivaha2026",
   dressCode: "ପାରମ୍ପାରିକ ଓଡ଼ିଆ ପୋଷାକ / ଏଥନିକ୍ ଓଆର୍",
   events: [
-    { icon: "🎻", title: "ନିର୍ବନ୍ଧ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" },
-    { icon: "🥭", title: "ହଳଦୀ", time: "ସକାଳ ୧୦:୦୦" },
-    { icon: "💒", title: "ବିବାହ", time: "ରାତି ୭:୩୦" },
-    { icon: "🍲", title: "ପ୍ରୀତି ଭୋଜି", time: "ରାତି ୮:୩୦" }
-  ]
+    // You can use either emoji OR image URL for icon:
+    // Example with image: { icon: "assets/mehendi-icon.png", title: "ମେହେନ୍ଦୀ", date: "୧୫ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" }
+    { icon: "🎻", title: "ନିର୍ବନ୍ଧ", date: "୧୫ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" },
+    { icon: "🥭", title: "ହଳଦୀ", date: "୧୬ ଜୁଲାଇ", time: "ସକାଳ ୧୦:୦୦" },
+    { icon: "💒", title: "ବିବାହ", date: "୧୬ ଜୁଲାଇ", time: "ରାତି ୭:୩୦" },
+    { icon: "🍲", title: "ପ୍ରୀତି ଭୋଜି", date: "୧୬ ଜୁଲାଇ", time: "ରାତି ୮:୩୦" }
+  ],
+  // Photo/Image Configuration - replace these with your actual image paths!
+  images: {
+    envelopePhoto: "assets/opening-card-reference.png", // Photo on the closed envelope
+    openedInvitePhoto: "assets/opened-card-reference.png", // Photo on the opened invitation
+    groomPhoto: "assets/reference-wedding.png", // Groom's portrait photo
+    bridePhoto: "assets/reference-wedding.png" // Bride's portrait photo
+  },
+  // Google Calendar Events
+  marriageEvent: {
+    title: "ଶୁଭ ବିବାହ - Marriage of ଓମ ପ୍ରକାଶ & ସମମତାରାଣୀ",
+    startDateTime: "2026-07-16T19:30:00+05:30",
+    endDateTime: "2026-07-16T22:30:00+05:30",
+    location: "ଶ୍ରୀକୃଷ୍ଣ ମଣ୍ଡପ, ଗଛେନପଦୀ ଛକ, ବଉଳା ରୋଡ, କେନ୍ଦୁଝର, ଓଡ଼ିଶା",
+    description: "Join us to celebrate the wedding of ଓମ ପ୍ରକାଶ & ସମମତାରାଣୀ"
+  },
+  receptionEvent: {
+    title: "Wedding Reception - ଓମ ପ୍ରକାଶ & ସମମତାରାଣୀ",
+    startDateTime: "2026-07-17T18:00:00+05:30",
+    endDateTime: "2026-07-17T21:00:00+05:30",
+    location: "ଶ୍ରୀକୃଷ୍ଣ ମଣ୍ଡପ, ଗଛେନପଦୀ ଛକ, ବଉଳା ରୋଡ, କେନ୍ଦୁଝର, ଓଡ଼ିଶା",
+    description: "Join us for the wedding reception of ଓମ ପ୍ରକାଶ & ସମମତାରାଣୀ"
+  }
 };
 
 window.WEDDING_CONFIG = WEDDING_CONFIG;
@@ -38,11 +67,40 @@ function applyConfigText() {
     }
   });
 
+  // Apply images from config
+  const envelopePhotoEl = document.getElementById("envelope-photo");
+  if (envelopePhotoEl && WEDDING_CONFIG.images?.envelopePhoto) {
+    envelopePhotoEl.src = WEDDING_CONFIG.images.envelopePhoto;
+  }
+
+  const openedPhotoEl = document.getElementById("opened-photo");
+  if (openedPhotoEl && WEDDING_CONFIG.images?.openedInvitePhoto) {
+    openedPhotoEl.src = WEDDING_CONFIG.images.openedInvitePhoto;
+  }
+
+  const groomPhotoEl = document.getElementById("groom-photo");
+  if (groomPhotoEl && WEDDING_CONFIG.images?.groomPhoto) {
+    groomPhotoEl.src = WEDDING_CONFIG.images.groomPhoto;
+  }
+
+  const bridePhotoEl = document.getElementById("bride-photo");
+  if (bridePhotoEl && WEDDING_CONFIG.images?.bridePhoto) {
+    bridePhotoEl.src = WEDDING_CONFIG.images.bridePhoto;
+  }
+
   const timeline = document.getElementById("eventTimeline");
   timeline.innerHTML = WEDDING_CONFIG.events.map((event) => `
     <div class="event">
-      <span class="event-icon" aria-hidden="true">${event.icon}</span>
-      <p><strong>${event.title}</strong><span>${event.time}</span></p>
+      <span class="event-icon" aria-hidden="true">
+        ${event.icon.includes('.') || event.icon.startsWith('http') 
+          ? `<img src="${event.icon}" alt="${event.title}" class="event-icon-img">` 
+          : event.icon}
+      </span>
+      <p>
+        <strong>${event.title}</strong>
+        ${event.date ? `<span class="event-date">${event.date}</span>` : ''}
+        <span>${event.time}</span>
+      </p>
     </div>
   `).join("");
 
