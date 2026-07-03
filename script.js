@@ -232,49 +232,67 @@ function setupMusic() {
   const toggle = document.getElementById("musicToggle");
   const status = document.getElementById("musicStatus");
 
+  // Try both possible filenames in case of typo
   audio.src = WEDDING_CONFIG.musicSrc;
   audio.loop = true;
   audio.volume = 0.7; // Set default volume to 70%
+  audio.preload = "auto";
 
-  // Try to autoplay on page load
-  const tryAutoplay = async () => {
+  let isPlaying = false;
+
+  // Function to try playing audio
+  const tryPlay = async () => {
+    if (isPlaying) return;
     try {
       await audio.play();
+      isPlaying = true;
       toggle.textContent = "🔇";
       status.textContent = "Playing";
     } catch (error) {
-      // Autoplay failed - user needs to interact
+      // Autoplay failed - wait for user interaction
+      isPlaying = false;
       toggle.textContent = "🔊";
       status.textContent = "Tap to play";
     }
   };
 
-  // Try autoplay
-  tryAutoplay();
+  // Try autoplay immediately
+  tryPlay();
 
-  // Also try autoplay when user first interacts with page
-  const handleFirstInteraction = async () => {
-    if (audio.paused) {
-      try {
-        await audio.play();
-        toggle.textContent = "🔇";
-        status.textContent = "Playing";
-      } catch (error) {
-        // Still failed - leave as is
-      }
+  // Try autoplay after loading screen is hidden
+  const checkLoadingScreen = setInterval(() => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen && loadingScreen.classList.contains('hidden')) {
+      clearInterval(checkLoadingScreen);
+      tryPlay();
     }
-    document.removeEventListener("click", handleFirstInteraction);
-    document.removeEventListener("touchstart", handleFirstInteraction);
+  }, 100);
+
+  // Try autoplay on any user interaction
+  const handleInteraction = async () => {
+    if (!isPlaying) {
+      await tryPlay();
+    }
+    // Remove listeners after first success
+    if (isPlaying) {
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("touchstart", handleInteraction);
+      document.removeEventListener("scroll", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
+    }
   };
 
-  document.addEventListener("click", handleFirstInteraction, { once: true });
-  document.addEventListener("touchstart", handleFirstInteraction, { once: true });
+  document.addEventListener("click", handleInteraction);
+  document.addEventListener("touchstart", handleInteraction);
+  document.addEventListener("scroll", handleInteraction);
+  document.addEventListener("keydown", handleInteraction);
 
   toggle.addEventListener("click", async (e) => {
     e.stopPropagation(); // Prevent double interaction
     if (audio.paused) {
       try {
         await audio.play();
+        isPlaying = true;
         toggle.textContent = "🔇";
         status.textContent = "Playing";
       } catch (error) {
@@ -282,6 +300,7 @@ function setupMusic() {
       }
     } else {
       audio.pause();
+      isPlaying = false;
       toggle.textContent = "🔊";
       status.textContent = "Paused";
     }

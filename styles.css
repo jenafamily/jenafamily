@@ -2268,6 +2268,7 @@ body.details-mode .music-player {
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
+  box-sizing: border-box; /* Add this to include padding in width calculation */
 }
 
 .modal-overlay.active {
@@ -2278,14 +2279,17 @@ body.details-mode .music-player {
 .modal-content {
   background: var(--paper);
   border-radius: 1rem;
-  padding: 2rem;
+  padding: 1.5rem; /* Reduced padding on mobile */
   max-width: 500px;
   width: 100%;
+  max-height: 90vh; /* Prevent modal from being taller than screen */
+  overflow-y: auto; /* Allow scrolling if content is too long */
   text-align: center;
   box-shadow: var(--shadow);
   border: 3px solid var(--gold);
   position: relative;
   animation: slideUp 0.3s ease-in-out;
+  box-sizing: border-box;
 }
 
 .modal-close {
