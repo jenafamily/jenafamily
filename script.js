@@ -410,7 +410,7 @@ function setupCalendarModal() {
           setTimeout(() => {
             modal.classList.add('active');
             modal.dataset.opened = 'true';
-          }, 500);
+          }, 4000); // Wait 4 seconds after reaching last page
         }
       }
     });
