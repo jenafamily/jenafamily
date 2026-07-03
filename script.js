@@ -404,6 +404,10 @@ window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
       loadingScreen.classList.add('hidden');
+      // After transition completes, set display: none
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden-after-transition');
+      }, 800); // Match transition duration
     }
   }, 1500); // Keep loader visible for at least 1.5 seconds for better UX
 });

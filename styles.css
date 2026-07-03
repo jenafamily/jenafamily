@@ -27,13 +27,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 99999; /* Higher z-index to ensure it's on top */
   transition: opacity 0.8s ease, visibility 0.8s ease;
+  opacity: 1;
+  visibility: visible;
 }
 
 .loading-screen.hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+}
+
+/* After transition, set display: none to free up resources */
+.loading-screen.hidden-after-transition {
+  display: none;
 }
 
 .loading-content {
