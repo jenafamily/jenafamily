@@ -22,16 +22,16 @@ const WEDDING_CONFIG = {
   events: [
     // You can use either emoji OR image URL for icon:
     // Example with image: { icon: "assets/mehendi-icon.png", title: "ମେହେନ୍ଦୀ", date: "୧୫ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" }
-    { icon: "🎻", title: "ନିର୍ବନ୍ଧ", date: "୧୫ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" },
-    { icon: "🥭", title: "ହଳଦୀ", date: "୧୬ ଜୁଲାଇ", time: "ସକାଳ ୧୦:୦୦" },
-    { icon: "💒", title: "ବିବାହ", date: "୧୬ ଜୁଲାଇ", time: "ରାତି ୭:୩୦" },
-    { icon: "🍲", title: "ପ୍ରୀତି ଭୋଜି", date: "୧୬ ଜୁଲାଇ", time: "ରାତି ୮:୩୦" }
+    { icon: "assets/mehendi.png", title: "ମେହେନ୍ଦି ", date: "୧୫ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୬:୦୦" },
+    { icon: "assets/haldi.webp", title: "ହଳଦୀ", date: "୧୬ ଜୁଲାଇ", time: "ସକାଳ ୧୦:୦୦" },
+    { icon: "assets/wedding.png", title: "ବିବାହ (Wedding)", date: "୧୬ ଜୁଲାଇ", time: "ରାତ୍ରି ବିବାହ " },
+    { icon: "assets/reception.png", title: "ପ୍ରୀତି ଭୋଜନ (Reception)", date: "୧୯ ଜୁଲାଇ", time: "ସନ୍ଧ୍ୟା ୭ ଘଟିକା" }
   ],
   // Photo/Image Configuration - replace these with your actual image paths!
   images: {
     envelopePhoto: "assets/opening-card-reference.png", // Photo on the closed envelope
     openedInvitePhoto: "assets/opened-card-reference.png", // Photo on the opened invitation
-    groomPhoto: "assets/reference-wedding.png", // Groom's portrait photo
+    groomPhoto: "assets/om.png", // Groom's portrait photo
     bridePhoto: "assets/reference-wedding.png" // Bride's portrait photo
   },
   // Google Calendar Events
@@ -309,4 +309,101 @@ document.addEventListener("DOMContentLoaded", () => {
   setupMusic();
   setupShare();
   setupHashtag();
+  setupCalendarModal();
+});
+
+// Setup Calendar Modal
+function setupCalendarModal() {
+  const modal = document.getElementById('calendarModal');
+  const openBtn = document.getElementById('openCalendarModal');
+  const closeBtn = document.getElementById('closeCalendarModal');
+  const marriageBtn = document.getElementById('marriageCalendarBtn');
+  const receptionBtn = document.getElementById('receptionCalendarBtn');
+  const blessingCard = document.querySelector('.blessing-card');
+
+  // Display dates in modal
+  document.getElementById('weddingDateDisplay').textContent = WEDDING_CONFIG.weddingDateText;
+  // For reception, let's assume it's next day - we can add to config if needed
+  document.getElementById('receptionDateDisplay').textContent = WEDDING_CONFIG.weddingDateText;
+
+  // Setup Google Calendar links
+  setupCalendarLinks(marriageBtn, receptionBtn);
+
+  // Open modal when button is clicked
+  openBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+  });
+
+  // Close modal when close button is clicked
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  // Close modal when clicking outside
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  // Open modal automatically when blessing card is in view
+  const modalObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Only auto-open once
+        if (!modal.dataset.opened) {
+          setTimeout(() => {
+            modal.classList.add('active');
+            modal.dataset.opened = 'true';
+          }, 500);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  if (blessingCard) {
+    modalObserver.observe(blessingCard);
+  }
+}
+
+// Setup Google Calendar Links
+function setupCalendarLinks(marriageBtn, receptionBtn) {
+  const formatDateForCalendar = (dateStr) => {
+    // Parse date from config (ISO format)
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}${month}${day}T${hours}${minutes}00`;
+  };
+
+  const addHours = (dateStr, hours) => {
+    const date = new Date(dateStr);
+    date.setHours(date.getHours() + hours);
+    return date.toISOString();
+  };
+
+  // Marriage event
+  const weddingStart = formatDateForCalendar(WEDDING_CONFIG.marriageEvent.startDateTime);
+  const weddingEnd = formatDateForCalendar(WEDDING_CONFIG.marriageEvent.endDateTime);
+  const weddingUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(WEDDING_CONFIG.marriageEvent.title)}&dates=${weddingStart}/${weddingEnd}&details=${encodeURIComponent(WEDDING_CONFIG.marriageEvent.description)}&location=${encodeURIComponent(WEDDING_CONFIG.marriageEvent.location)}&sf=true&output=xml`;
+  marriageBtn.href = weddingUrl;
+
+  // Reception event (let's make it next day for demo)
+  const receptionStart = formatDateForCalendar(WEDDING_CONFIG.receptionEvent.startDateTime);
+  const receptionEnd = formatDateForCalendar(WEDDING_CONFIG.receptionEvent.endDateTime);
+  const receptionUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(WEDDING_CONFIG.receptionEvent.title)}&dates=${receptionStart}/${receptionEnd}&details=${encodeURIComponent(WEDDING_CONFIG.receptionEvent.description)}&location=${encodeURIComponent(WEDDING_CONFIG.receptionEvent.location)}&sf=true&output=xml`;
+  receptionBtn.href = receptionUrl;
+}
+
+// Hide loading screen when page is fully loaded
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+      loadingScreen.classList.add('hidden');
+    }
+  }, 1500); // Keep loader visible for at least 1.5 seconds for better UX
 });
